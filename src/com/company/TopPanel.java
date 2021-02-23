@@ -34,54 +34,60 @@ public class TopPanel extends JPanel {
 
         // menuPanelLeft
         menuPanelLeft.setBackground(null);
-        menuPanelLeft.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        menuPanelLeft.setLayout(null);
 
         // menuPanelRight
         menuPanelRight.setBackground(null);
-        menuPanelRight.setLayout(null);
+        menuPanelRight.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 20));
     }
 
     // adds components to menuPanelLeft
     private void initComponentsMenuPanelLeft() {
 
         JLabel labelTitle = new JLabel("Geozeichner");
-        labelTitle.setPreferredSize(new Dimension(520, 80));
-        labelTitle.setFont(new Font(null, Font.PLAIN, 20));
+        labelTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        labelTitle.setBounds(10, 0, 510, 80);
+        labelTitle.setFont(new Font(null, Font.BOLD, 25));
         menuPanelLeft.add(labelTitle);
     }
 
     // adds components to menuPanelRight
     public void initComponentsMenuPanelRight() {
 
+        //-------------------- VARIABLES --------------------
         ImageIcon iconInfo = new ImageIcon("images/info.png");
         ImageIcon iconHelp = new ImageIcon("images/help.png");
         ImageIcon iconReset = new ImageIcon("images/trash.png");
-
-        // buttonInfo
-        JButton buttonInfo = new JButton();
-        buttonInfo.setBackground(null);
-        buttonInfo.setContentAreaFilled(false);
-        buttonInfo.setIcon(iconInfo);
-        buttonInfo.setFocusable(false);
-        buttonInfo.setBounds(490, 25, 30, 30);
-        menuPanelRight.add(buttonInfo);
-
-        // buttonHelp
-        JButton buttonHelp = new JButton();
-        buttonHelp.setBackground(null);
-        buttonHelp.setContentAreaFilled(false);
-        buttonHelp.setIcon(iconHelp);
-        buttonHelp.setFocusable(false);
-        buttonHelp.setBounds(430, 25, 30, 30);
-        menuPanelRight.add(buttonHelp);
+        //---------------------------------------------------
 
         // buttonReset
         JButton buttonReset = new JButton();
         buttonReset.setBackground(null);
+        buttonReset.setBorderPainted(false);
         buttonReset.setContentAreaFilled(false);
         buttonReset.setIcon(iconReset);
         buttonReset.setFocusable(false);
-        buttonReset.setBounds(370, 25, 30, 30);
+        buttonReset.setPreferredSize(new Dimension(40, 40));
         menuPanelRight.add(buttonReset);
+
+        // buttonHelp
+        JButton buttonHelp = new JButton();
+        buttonHelp.setBackground(null);
+        buttonHelp.setBorderPainted(false);
+        buttonHelp.setContentAreaFilled(false);
+        buttonHelp.setIcon(iconHelp);
+        buttonHelp.setFocusable(false);
+        buttonHelp.setPreferredSize(new Dimension(40, 40));
+        menuPanelRight.add(buttonHelp);
+
+        // buttonInfo
+        JButton buttonInfo = new JButton();
+        buttonInfo.setBackground(null);
+        buttonInfo.setBorderPainted(false);
+        buttonInfo.setContentAreaFilled(false);
+        buttonInfo.setIcon(iconInfo);
+        buttonInfo.setFocusable(false);
+        buttonInfo.setPreferredSize(new Dimension(40, 40));
+        menuPanelRight.add(buttonInfo);
     }
 }
