@@ -21,6 +21,11 @@ public class Kreis extends Figur {
         this.radius = radius;
     }
 
+    // Berechnungen
+    public double flaeche() {
+        return Math.PI * Math.pow(radius, 2);
+    }
+
     // toString
     public String objectToSring() {
         return "Kreis";
