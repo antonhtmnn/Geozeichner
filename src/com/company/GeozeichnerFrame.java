@@ -13,7 +13,7 @@ public class GeozeichnerFrame extends JFrame {
         setLayout(new BorderLayout());
 
         setSize(1200, 1000);
-        setMinimumSize(new Dimension(1040, 800));
+        setMinimumSize(new Dimension(1040, 940));
         setResizable(true);
         setLocationRelativeTo(null);
         //-------------------------------------------------

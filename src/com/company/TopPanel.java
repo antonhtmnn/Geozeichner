@@ -8,6 +8,7 @@ public class TopPanel extends JPanel {
     // Attribute
     private final JPanel menuPanelLeft = new JPanel();
     private final JPanel menuPanelRight = new JPanel();
+    private Color colorTopPanel = Color.lightGray;
 
     // Konstruktor
     public TopPanel() {
@@ -30,14 +31,19 @@ public class TopPanel extends JPanel {
         //-------------------------------------------------
     }
 
+    // Setter
+    public void setColorTopPanel(Color color) {
+        colorTopPanel = color;
+    }
+
     private void buildMenuPanel() {
 
         // menuPanelLeft
-        menuPanelLeft.setBackground(null);
+        menuPanelLeft.setBackground(colorTopPanel);
         menuPanelLeft.setLayout(null);
 
         // menuPanelRight
-        menuPanelRight.setBackground(null);
+        menuPanelRight.setBackground(colorTopPanel);
         menuPanelRight.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 20));
     }
 
@@ -45,7 +51,7 @@ public class TopPanel extends JPanel {
     private void initComponentsMenuPanelLeft() {
 
         JLabel labelTitle = new JLabel("Geozeichner");
-        labelTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        labelTitle.setBorder(null);
         labelTitle.setBounds(10, 0, 510, 80);
         labelTitle.setFont(new Font(null, Font.BOLD, 25));
         menuPanelLeft.add(labelTitle);

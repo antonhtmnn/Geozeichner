@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -33,17 +34,22 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private final int[] kreisTextFieldIndex = {3, 5, 11};
 
     // array (figuren) contains all created objects
-    private int anzahlFiguren;
-    private Figur[] figuren = new Figur[0];
+    public static int anzahlFiguren;
+    public static Figur[] figuren = new Figur[0];
 
     // output table
     private DefaultTableModel model;
     private String[] row;
     private JScrollPane pane;
 
+    // colors
+    private Color colorCenterPanel = null;
+
     // others
     private JButton buttonAdd;
     private int checklist;
+    private int rechteckTotalAmount;
+    private int kreisTotalAmount;
     //------------------------------------------------------------------------------------------------------------
 
     //------------------------------------------------- General --------------------------------------------------
@@ -89,11 +95,11 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildEingabeAusgabePanel() {
 
         // panelEingabe
-        panelEingabe.setBackground(null);
+        panelEingabe.setBackground(colorCenterPanel);
         panelEingabe.setLayout(new BorderLayout());
 
         // panelAusgabe
-        panelAusgabe.setBackground(null);
+        panelAusgabe.setBackground(colorCenterPanel);
         panelAusgabe.setLayout(new BorderLayout());
     }
     //------------------------------------------------------------------------------------------------------------
@@ -102,7 +108,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildEingabePanelTop() {
 
         // panelEingabeTop
-        panelEingabeTop.setBackground(Color.YELLOW);
+        panelEingabeTop.setBackground(colorCenterPanel);
         panelEingabeTop.setPreferredSize(new Dimension(0, 40));
         panelEingabeTop.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelEingabe.add(panelEingabeTop, BorderLayout.NORTH);
@@ -111,7 +117,6 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildEingabePanelCenter() {
 
         // panelEingabeCenter
-        panelEingabeCenter.setBackground(Color.ORANGE);
         panelEingabeCenter.setLayout(new GridLayout(0, 2, 0, 0));
         panelEingabeCenter.setPreferredSize(new Dimension(500, 0));
         panelEingabe.add(panelEingabeCenter, BorderLayout.EAST);
@@ -120,7 +125,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildEingabePanelCenterLeft() {
 
         // panelEingabeCenterLeft
-        panelEingabeCenterLeft.setBackground(Color.RED);
+        panelEingabeCenterLeft.setBackground(Color.LIGHT_GRAY);
         panelEingabeCenterLeft.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 4));
         panelEingabeCenter.add(panelEingabeCenterLeft);
     }
@@ -128,7 +133,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildEingabePanelCenterRight() {
 
         // panelEingabeCenterRight
-        panelEingabeCenterRight.setBackground(Color.GREEN);
+        panelEingabeCenterRight.setBackground(Color.LIGHT_GRAY);
         panelEingabeCenterRight.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 4));
         panelEingabeCenter.add(panelEingabeCenterRight);
     }
@@ -136,7 +141,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildEingabePanelBottom() {
 
         // panelEingabeBottom
-        panelEingabeBottom.setBackground(Color.YELLOW);
+        panelEingabeBottom.setBackground(colorCenterPanel);
         panelEingabeBottom.setPreferredSize(new Dimension(0, 40));
         panelEingabeBottom.setLayout(new FlowLayout(FlowLayout.RIGHT, 190, 5));
         panelEingabe.add(panelEingabeBottom, BorderLayout.SOUTH);
@@ -146,7 +151,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void initComponentsPanelEingabeTop() {
 
         JLabel labelTitle = new JLabel("Eingabe:");
-        labelTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        labelTitle.setBorder(null);
         labelTitle.setPreferredSize(new Dimension(490, 40));
         labelTitle.setFont(new Font(null, Font.BOLD, 20));
         panelEingabeTop.add(labelTitle);
@@ -181,14 +186,14 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
 
             // label (JLabel)
             if (componentsPanelEingabeCenter[i] instanceof JLabel) {
-                componentsPanelEingabeCenter[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                componentsPanelEingabeCenter[i].setBorder(null);
                 componentsPanelEingabeCenter[i].setPreferredSize(size);
                 componentsPanelEingabeCenter[i].setFont(font);
                 panelEingabeCenterLeft.add(componentsPanelEingabeCenter[i]);
             }
             // comboBox (JComboBox)
             else if (componentsPanelEingabeCenter[i] instanceof JComboBox) {
-                componentsPanelEingabeCenter[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                componentsPanelEingabeCenter[i].setBorder(null);
                 componentsPanelEingabeCenter[i].setPreferredSize(size);
                 ((JComboBox) componentsPanelEingabeCenter[i]).setSelectedIndex(0);
                 panelEingabeCenterRight.add(componentsPanelEingabeCenter[i]);
@@ -222,7 +227,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildAusgabePanelTop() {
 
         // panelAusgabeTop
-        panelAusgabeTop.setBackground(Color.LIGHT_GRAY);
+        panelAusgabeTop.setBackground(colorCenterPanel);
         panelAusgabeTop.setPreferredSize(new Dimension(0, 40));
         panelAusgabeTop.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
         panelAusgabe.add(panelAusgabeTop, BorderLayout.NORTH);
@@ -231,7 +236,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildAusgabePanelCenter() {
 
         // panelAusgabeCenter
-        panelAusgabeCenter.setBackground(Color.MAGENTA);
+        panelAusgabeCenter.setBackground(Color.LIGHT_GRAY);
         panelAusgabeCenter.setLayout(new BorderLayout());
         panelAusgabeCenter.setPreferredSize(new Dimension(500, 0));
         panelAusgabe.add(panelAusgabeCenter, BorderLayout.WEST);
@@ -240,7 +245,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildAusgabePanelBottom() {
 
         // panelAusgabeBottom
-        panelAusgabeBottom.setBackground(Color.LIGHT_GRAY);
+        panelAusgabeBottom.setBackground(colorCenterPanel);
         panelAusgabeBottom.setPreferredSize(new Dimension(0, 40));
         panelAusgabeBottom.setLayout(null);
         panelAusgabe.add(panelAusgabeBottom, BorderLayout.SOUTH);
@@ -250,7 +255,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void initComponentsPanelAusgabeTop() {
 
         JLabel labelTitle = new JLabel("Ausgabe:");
-        labelTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        labelTitle.setBorder(null);
         labelTitle.setPreferredSize(new Dimension(490, 40));
         labelTitle.setFont(new Font(null, Font.BOLD, 20));
         panelAusgabeTop.add(labelTitle);
@@ -280,19 +285,21 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
         // column default size
         TableColumn column;
         column = tableAusgabe.getColumnModel().getColumn(0);
-        column.setPreferredWidth(80);
+        column.setPreferredWidth(60);
         column = tableAusgabe.getColumnModel().getColumn(1);
-        column.setPreferredWidth(100);
+        column.setPreferredWidth(120);
         column = tableAusgabe.getColumnModel().getColumn(2);
         column.setPreferredWidth(160);
         column = tableAusgabe.getColumnModel().getColumn(3);
         column.setPreferredWidth(160);
 
-        // column 1 set location of input to center
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        tableAusgabe.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        tableAusgabe.setDefaultRenderer(String.class, centerRenderer);
+        // set column location of input to center
+        for (int i = 0; i < columnsTitle.length; i++) {
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            tableAusgabe.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            tableAusgabe.setDefaultRenderer(String.class, centerRenderer);
+        }
 
         pane = new JScrollPane(tableAusgabe);
         panelAusgabeCenter.add(pane, BorderLayout.CENTER);
@@ -361,8 +368,11 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
                 // check user input
                 if (checklist == eigenschaften.length) {
                     figuren[index] = new Rechteck(eigenschaften[0], eigenschaften[1], eigenschaften[2], eigenschaften[3]);
+                    rechteckTotalAmount++;
                     inputToArrayRow(index);
                     resetTextFields();
+
+                    CenterPanelKoordinatensystem.panelKoordMain.repaint();
                 }
             }
             // Kreis
@@ -374,6 +384,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
                 // check user input
                 if (checklist == eigenschaften.length) {
                     figuren[index] = new Kreis(eigenschaften[0], eigenschaften[1], eigenschaften[2]);
+                    kreisTotalAmount++;
                     inputToArrayRow(index);
                     resetTextFields();
                 }
@@ -404,7 +415,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
         for (int i = 0; i < eigenschaften.length; i++) {
 
             if (i < 2) {
-                if (((JTextField) componentsPanelEingabeCenter[textFieldIndex[i]]).getText().matches("^-?\\d+(\\.\\d{1,2})?$")) {
+                if (((JTextField) componentsPanelEingabeCenter[textFieldIndex[i]]).getText().matches("^\\-?(\\d{0,2})(\\.\\d{0,2})?$")) {
                     eigenschaften[i] = Double.parseDouble(((JTextField) componentsPanelEingabeCenter[textFieldIndex[i]]).getText());
                     componentsPanelEingabeCenter[textFieldIndex[i]].setBorder(null);
                     checklist++;
@@ -413,7 +424,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
                 }
             }
             else {
-                if (((JTextField) componentsPanelEingabeCenter[textFieldIndex[i]]).getText().matches("^[1-9]+(\\.\\d{1,2})?$")) {
+                if (((JTextField) componentsPanelEingabeCenter[textFieldIndex[i]]).getText().matches("^(([1-9]\\d?(\\.\\d{0,2})?)|(0\\.\\d{0,2}))$")) {
                     eigenschaften[i] = Double.parseDouble(((JTextField) componentsPanelEingabeCenter[textFieldIndex[i]]).getText());
                     componentsPanelEingabeCenter[textFieldIndex[i]].setBorder(null);
                     checklist++;
@@ -429,14 +440,16 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void inputToArrayRow(int objectIndex) {
 
         if (figuren[objectIndex] instanceof Rechteck) {
-            row[0] = "Rechteck";
+            row[0] = "R" +rechteckTotalAmount;
             row[1] = figuren[objectIndex].objectPositionToString();
-            row[2] = "a = " +((Rechteck) figuren[objectIndex]).getSeiteA()+ " b = " +((Rechteck) figuren[objectIndex]).getSeiteB();
-            row[3] = "A = " +((Rechteck) figuren[objectIndex]).flaeche();
+            row[2] = "a = " +Figur.cleanUpValue(((Rechteck) figuren[objectIndex]).getSeiteA())+ " | b = " +Figur.cleanUpValue(((Rechteck) figuren[objectIndex]).getSeiteB());
+            row[3] = "A = " +Figur.cleanUpValue(((Rechteck) figuren[objectIndex]).flaeche());
         }
         else if (figuren[objectIndex] instanceof Kreis) {
-            row[0] = "Kreis";
+            row[0] = "K" +kreisTotalAmount;
             row[1] = figuren[objectIndex].objectPositionToString();
+            row[2] = "r = " +Figur.cleanUpValue(((Kreis) figuren[objectIndex]).getRadius());
+            row[3] = "A = " +Figur.cleanUpValue(((Kreis) figuren[objectIndex]).flaeche());
         }
         model.addRow(row);
         pane.setVisible(true);
