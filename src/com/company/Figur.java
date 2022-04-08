@@ -8,12 +8,13 @@ public class Figur {
     private double posX;
     private double posY;
     private final Color color;
+    private final int transparency = 100;
 
     // Konstruktor
     public Figur(double posX, double posY) {
         this.posX = posX;
         this.posY = posY;
-        color = (new Color((int) Math.floor(Math.random() * 256), (int) Math.floor(Math.random() * 256), (int) Math.floor(Math.random() * 256)));
+        color = (new Color((int) Math.floor(Math.random() * 256), (int) Math.floor(Math.random() * 256), (int) Math.floor(Math.random() * 256), transparency));
     }
 
     // Getter

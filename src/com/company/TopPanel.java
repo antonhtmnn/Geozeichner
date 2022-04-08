@@ -2,13 +2,20 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TopPanel extends JPanel {
+public class TopPanel extends JPanel implements ActionListener {
 
     // Attribute
+
     private final JPanel menuPanelLeft = new JPanel();
     private final JPanel menuPanelRight = new JPanel();
-    private Color colorTopPanel = Color.lightGray;
+    private Color colorTopPanel = Color.WHITE;
+    // buttons
+    private JButton buttonReset;
+    private JButton buttonHelp;
+    private JButton buttonInfo;
 
     // Konstruktor
     public TopPanel() {
@@ -38,16 +45,16 @@ public class TopPanel extends JPanel {
 
     private void buildMenuPanel() {
 
-        // menuPanelLeft
+        // menuPanelLeft (title)
         menuPanelLeft.setBackground(colorTopPanel);
         menuPanelLeft.setLayout(null);
 
-        // menuPanelRight
+        // menuPanelRight (buttons)
         menuPanelRight.setBackground(colorTopPanel);
         menuPanelRight.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 20));
     }
 
-    // adds components to menuPanelLeft
+    // adds components to menuPanelLeft (title)
     private void initComponentsMenuPanelLeft() {
 
         JLabel labelTitle = new JLabel("Geozeichner");
@@ -57,7 +64,7 @@ public class TopPanel extends JPanel {
         menuPanelLeft.add(labelTitle);
     }
 
-    // adds components to menuPanelRight
+    // adds components to menuPanelRight (buttons)
     public void initComponentsMenuPanelRight() {
 
         //-------------------- VARIABLES --------------------
@@ -67,33 +74,58 @@ public class TopPanel extends JPanel {
         //---------------------------------------------------
 
         // buttonReset
-        JButton buttonReset = new JButton();
+        buttonReset = new JButton();
         buttonReset.setBackground(null);
         buttonReset.setBorderPainted(false);
-        buttonReset.setContentAreaFilled(false);
+        buttonReset.setContentAreaFilled(true);
         buttonReset.setIcon(iconReset);
         buttonReset.setFocusable(false);
         buttonReset.setPreferredSize(new Dimension(40, 40));
         menuPanelRight.add(buttonReset);
+        buttonReset.addActionListener(this);
 
         // buttonHelp
-        JButton buttonHelp = new JButton();
+        buttonHelp = new JButton();
         buttonHelp.setBackground(null);
         buttonHelp.setBorderPainted(false);
-        buttonHelp.setContentAreaFilled(false);
+        buttonHelp.setContentAreaFilled(true);
         buttonHelp.setIcon(iconHelp);
         buttonHelp.setFocusable(false);
         buttonHelp.setPreferredSize(new Dimension(40, 40));
         menuPanelRight.add(buttonHelp);
+        buttonHelp.addActionListener(this);
 
         // buttonInfo
-        JButton buttonInfo = new JButton();
+        buttonInfo = new JButton();
         buttonInfo.setBackground(null);
         buttonInfo.setBorderPainted(false);
-        buttonInfo.setContentAreaFilled(false);
+        buttonInfo.setContentAreaFilled(true);
         buttonInfo.setIcon(iconInfo);
         buttonInfo.setFocusable(false);
         buttonInfo.setPreferredSize(new Dimension(40, 40));
         menuPanelRight.add(buttonInfo);
+        buttonInfo.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+
+        // reset all inputs (buttonReset)
+        if (event.getSource() == buttonReset) {
+
+            new TopPanelTrash();
+        }
+
+        // show help (buttonHelp)
+        else if (event.getSource() == buttonHelp) {
+
+            System.out.println("help");
+        }
+
+        // show info (buttonInfo)
+        else if (event.getSource() == buttonInfo) {
+
+            System.out.println("info");
+        }
     }
 }

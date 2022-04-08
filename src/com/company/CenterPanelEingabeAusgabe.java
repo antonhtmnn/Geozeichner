@@ -15,6 +15,9 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     // panalEingabe
     private final JPanel panelEingabe = new JPanel();
     private final JPanel panelEingabeTop = new JPanel();
+    private final JPanel panelEingabeTopTop = new JPanel();
+    private final JPanel panelCenter = new JPanel();
+    private final CenterPanelSettings panelSettingsCenter = new CenterPanelSettings();
     private final JPanel panelEingabeCenter = new JPanel();
     private final JPanel panelEingabeCenterLeft = new JPanel();
     private final JPanel panelEingabeCenterRight = new JPanel();
@@ -23,8 +26,15 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     // panalAusgabe
     private final JPanel panelAusgabe = new JPanel();
     private final JPanel panelAusgabeTop = new JPanel();
+    private final JPanel panelAusgabeTopTop = new JPanel();
     private final JPanel panelAusgabeCenter = new JPanel();
     private final JPanel panelAusgabeBottom = new JPanel();
+
+    // buttons
+    private JButton buttonAdd;
+    private JButton buttonInput;
+    private JButton buttonSettings;
+    private JButton buttonOutput;
 
     // contains all components of panelEingabe / panelAusgabe
     private final JComponent[] componentsPanelEingabeCenter = new JComponent[12];
@@ -32,12 +42,14 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     // textField index (in componentsPanelEingabeCenter) of specific objects
     private final int[] rechteckTextFieldIndex = {3, 5, 7, 9};
     private final int[] kreisTextFieldIndex = {3, 5, 11};
+    private double[] eigenschaften;
 
     // array (figuren) contains all created objects
     public static int anzahlFiguren;
     public static Figur[] figuren = new Figur[0];
 
     // output table
+    private JTable tableAusgabe;
     private DefaultTableModel model;
     private String[] row;
     private JScrollPane pane;
@@ -46,7 +58,6 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private Color colorCenterPanel = null;
 
     // others
-    private JButton buttonAdd;
     private int checklist;
     private int rechteckTotalAmount;
     private int kreisTotalAmount;
@@ -101,6 +112,12 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
         // panelAusgabe
         panelAusgabe.setBackground(colorCenterPanel);
         panelAusgabe.setLayout(new BorderLayout());
+
+        // panelCenter
+        panelCenter.setBackground(null);
+        panelCenter.setLayout(new BorderLayout());
+        panelCenter.setPreferredSize(new Dimension(500, 0));
+        panelEingabe.add(panelCenter, BorderLayout.EAST);
     }
     //------------------------------------------------------------------------------------------------------------
 
@@ -108,18 +125,34 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildEingabePanelTop() {
 
         // panelEingabeTop
-        panelEingabeTop.setBackground(colorCenterPanel);
+        panelEingabeTop.setBackground(null);
         panelEingabeTop.setPreferredSize(new Dimension(0, 40));
-        panelEingabeTop.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        panelEingabeTop.setLayout(new BorderLayout());
         panelEingabe.add(panelEingabeTop, BorderLayout.NORTH);
+
+        // panelEingabeTopTop
+        panelEingabeTopTop.setBackground(null);
+        panelEingabeTopTop.setPreferredSize(new Dimension(500, 0));
+        panelEingabeTopTop.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        panelEingabeTop.add(panelEingabeTopTop, BorderLayout.EAST);
     }
 
     private void buildEingabePanelCenter() {
 
-        // panelEingabeCenter
-        panelEingabeCenter.setLayout(new GridLayout(0, 2, 0, 0));
-        panelEingabeCenter.setPreferredSize(new Dimension(500, 0));
-        panelEingabe.add(panelEingabeCenter, BorderLayout.EAST);
+        if (panelSettingsCenter.getVisibility()) {
+            panelEingabeCenter.setVisible(false);
+            // panelAppearanceCenter
+            panelCenter.add(panelSettingsCenter, BorderLayout.CENTER);
+            panelSettingsCenter.setVisible(true);
+        }
+        else {
+            panelSettingsCenter.setVisible(false);
+            // panelEingabeCenter
+            panelEingabeCenter.setLayout(new GridLayout(0, 2, 0, 0));
+            panelEingabeCenter.setPreferredSize(new Dimension(500, 0));
+            panelCenter.add(panelEingabeCenter, BorderLayout.CENTER);
+            panelEingabeCenter.setVisible(true);
+        }
     }
 
     private void buildEingabePanelCenterLeft() {
@@ -150,11 +183,26 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     // adds components to panelEingabeTop
     private void initComponentsPanelEingabeTop() {
 
-        JLabel labelTitle = new JLabel("Eingabe:");
-        labelTitle.setBorder(null);
-        labelTitle.setPreferredSize(new Dimension(490, 40));
-        labelTitle.setFont(new Font(null, Font.BOLD, 20));
-        panelEingabeTop.add(labelTitle);
+        Font font = new Font(null, Font.BOLD, 20);
+        int width = 200;
+
+        // buttonInput
+        buttonInput = new JButton("Eingabe");
+        buttonInput.setFont(font);
+        buttonInput.setFocusable(false);
+        buttonInput.setBackground(Color.LIGHT_GRAY);
+        buttonInput.setPreferredSize(new Dimension(width, 40));
+        panelEingabeTopTop.add(buttonInput);
+        buttonInput.addActionListener(this);
+
+        // buttonSettings
+        buttonSettings = new JButton("Einstellungen");
+        buttonSettings.setFont(font);
+        buttonSettings.setFocusable(false);
+        buttonSettings.setBackground(Color.GRAY);
+        buttonSettings.setPreferredSize(new Dimension(width, 40));
+        panelEingabeTopTop.add(buttonSettings);
+        buttonSettings.addActionListener(this);
     }
 
     // adds components to panelEingabeCenter
@@ -219,6 +267,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
         buttonAdd.setFocusable(false);
         buttonAdd.setPreferredSize(new Dimension(120, 30));
         panelEingabeBottom.add(buttonAdd);
+        buttonAdd.setVisible(false);
         buttonAdd.addActionListener(this);
     }
     //------------------------------------------------------------------------------------------------------------
@@ -227,10 +276,16 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     private void buildAusgabePanelTop() {
 
         // panelAusgabeTop
-        panelAusgabeTop.setBackground(colorCenterPanel);
+        panelAusgabeTop.setBackground(null);
         panelAusgabeTop.setPreferredSize(new Dimension(0, 40));
-        panelAusgabeTop.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        panelAusgabeTop.setLayout(new BorderLayout());
         panelAusgabe.add(panelAusgabeTop, BorderLayout.NORTH);
+
+        // panelAusgabeTopTop
+        panelAusgabeTopTop.setBackground(null);
+        panelAusgabeTopTop.setPreferredSize(new Dimension(500, 0));
+        panelAusgabeTopTop.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        panelAusgabeTop.add(panelAusgabeTopTop, BorderLayout.WEST);
     }
 
     private void buildAusgabePanelCenter() {
@@ -254,11 +309,17 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
     // adds components to panelAusgabeTop
     private void initComponentsPanelAusgabeTop() {
 
-        JLabel labelTitle = new JLabel("Ausgabe:");
-        labelTitle.setBorder(null);
-        labelTitle.setPreferredSize(new Dimension(490, 40));
-        labelTitle.setFont(new Font(null, Font.BOLD, 20));
-        panelAusgabeTop.add(labelTitle);
+        Font font = new Font(null, Font.BOLD, 20);
+        int width = 200;
+
+        // buttonOutput
+        buttonOutput = new JButton("Ausgabe");
+        buttonOutput.setFont(font);
+        buttonOutput.setFocusable(false);
+        buttonOutput.setBackground(Color.LIGHT_GRAY);
+        buttonOutput.setPreferredSize(new Dimension(width, 40));
+        panelAusgabeTopTop.add(buttonOutput);
+        buttonOutput.addActionListener(this);
     }
 
     // adds components to panelAusgabeCenter
@@ -276,11 +337,14 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
         };
         model.setColumnIdentifiers(columnsTitle);
 
-        JTable tableAusgabe = new JTable();
+        tableAusgabe = new JTable();
         tableAusgabe.setModel(model);
         tableAusgabe.setFont(new Font(null, Font.PLAIN, 16));
         tableAusgabe.setRowHeight(30);
         tableAusgabe.getTableHeader().setReorderingAllowed(false);
+        tableAusgabe.setFocusable(false);
+        tableAusgabe.setRowSelectionAllowed(false);
+        tableAusgabe.setVisible(true);
 
         // column default size
         TableColumn column;
@@ -322,6 +386,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
                 for (int i = 2; i < componentsPanelEingabeCenter.length; i++) {
                     componentsPanelEingabeCenter[i].setVisible(false);
                     resetTextFields();
+                    buttonAdd.setVisible(false);
                 }
             }
             // Rechteck
@@ -329,6 +394,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
                 for (int i = 0; i < componentsPanelEingabeCenter.length; i++) {
                     componentsPanelEingabeCenter[i].setVisible(i < 10);
                     resetTextFields();
+                    buttonAdd.setVisible(true);
                 }
             }
             // Kreis
@@ -336,6 +402,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
                 for (int i = 0; i < componentsPanelEingabeCenter.length; i++) {
                     componentsPanelEingabeCenter[i].setVisible(i < 6 || i == 10 || i == 11);
                     resetTextFields();
+                    buttonAdd.setVisible(true);
                 }
             }
         }
@@ -363,7 +430,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
             if (((JComboBox) componentsPanelEingabeCenter[1]).getSelectedItem() == "Rechteck") {
 
                 // Rechteck Eigenschaften in Array (eigenschaften) speichern [posX / posY / seiteA / seiteB]
-                double[] eigenschaften = inputToArray(rechteckTextFieldIndex);
+                eigenschaften = inputToArray(rechteckTextFieldIndex);
 
                 // check user input
                 if (checklist == eigenschaften.length) {
@@ -379,7 +446,7 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
             else if (((JComboBox) componentsPanelEingabeCenter[1]).getSelectedItem() == "Kreis") {
 
                 // Kreis Eigenschaften in Array (eigenschaften) speichern [posX / posY / radius]
-                double[] eigenschaften = inputToArray(kreisTextFieldIndex);
+                eigenschaften = inputToArray(kreisTextFieldIndex);
 
                 // check user input
                 if (checklist == eigenschaften.length) {
@@ -387,10 +454,29 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
                     kreisTotalAmount++;
                     inputToArrayRow(index);
                     resetTextFields();
+
+                    CenterPanelKoordinatensystem.panelKoordMain.repaint();
                 }
             }
         }
         //-----------------------------------------------------------------------------------
+        // Input (buttonInput)
+        else if (event.getSource() == buttonInput) {
+
+            panelSettingsCenter.setVisibility(false);
+            buildEingabePanelCenter();
+
+            ((JComboBox) componentsPanelEingabeCenter[1]).setSelectedIndex(0);
+        }
+        //-----------------------------------------------------------------------------------
+        // Appearance (buttonAppearance)
+        else if (event.getSource() == buttonSettings) {
+
+            panelSettingsCenter.setVisibility(true);
+            buildEingabePanelCenter();
+
+            buttonAdd.setVisible(false);
+        }
     }
     //------------------------------------------------------------------------------------------------------------
 
@@ -454,6 +540,31 @@ public class CenterPanelEingabeAusgabe extends JPanel implements ActionListener 
         model.addRow(row);
         pane.setVisible(true);
         panelAusgabeCenter.revalidate();
+    }
+
+    // reset all
+    public void resetAll() {
+
+        // comboBox reset to "Bitte auswählen"
+        ((JComboBox) componentsPanelEingabeCenter[1]).setSelectedIndex(0);
+
+        // change to panelEingabeCenter
+        buttonInput.doClick();
+
+        // remove all created objects
+        anzahlFiguren = 0;
+        figuren = new Figur[0];
+        rechteckTotalAmount = 0;
+        kreisTotalAmount = 0;
+
+        // reset Koordinatensystem
+        panelSettingsCenter.sliderScale.setValue(20);
+        CenterPanelKoordinatensystem.panelKoordMain.repaint();
+
+        // reset Output-table
+        panelAusgabeCenter.remove(pane);
+        panelAusgabeCenter.repaint();
+        initComponentsPanelAusgabeCenter();
     }
     //------------------------------------------------------------------------------------------------------------
 }

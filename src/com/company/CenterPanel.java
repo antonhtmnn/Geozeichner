@@ -5,6 +5,9 @@ import java.awt.*;
 
 public class CenterPanel extends JPanel {
 
+    public static CenterPanelEingabeAusgabe cPanelEingabeAusgabe;
+    public static CenterPanelKoordinatensystem cPanelKoordinatensystem;
+
     // Konstruktor
     public CenterPanel() {
 
@@ -13,10 +16,10 @@ public class CenterPanel extends JPanel {
         setLayout(new BorderLayout());
         //-------------------------------------------------
 
-        CenterPanelEingabeAusgabe cPanelEingabeAusgabe = new CenterPanelEingabeAusgabe();
+        cPanelEingabeAusgabe = new CenterPanelEingabeAusgabe();
         add(cPanelEingabeAusgabe, BorderLayout.NORTH);
 
-        CenterPanelKoordinatensystem cPanelKoordinatensystem = new CenterPanelKoordinatensystem();
+        cPanelKoordinatensystem = new CenterPanelKoordinatensystem();
         add(cPanelKoordinatensystem, BorderLayout.CENTER);
 
         //-------------------------------------------------
