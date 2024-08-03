@@ -76,6 +76,7 @@ Geozeichner/
 │           ├── Rechteck.java
 │           ├── TopPanel.java
 │           └── TopPanelTrash.java
+├── LICENSE
 └── README.md
 ```
 
