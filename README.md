@@ -3,6 +3,14 @@
 
 Geozeichner is an interactive program designed to draw 2D shapes into a coordinate system. Below is an overview of the project, its structure, and key components.
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=HJqMfB_-E5g" title="Geozeichner">
+    <img src="https://res.cloudinary.com/marcomontalbano/image/upload/v1649765888/video_to_markdown/images/youtube--HJqMfB_-E5g-c05b58ac6eb4c4700831b2b3070cd403.jpg" alt="Geozeichner — demo video thumbnail" width="640" />
+  </a>
+  <br/>
+  <sub>▶ click image to watch demo video</sub>
+</p>
+
 ### Table of Contents
 
 - [Project Description](#project-description)
@@ -16,8 +24,6 @@ Geozeichner is an interactive program designed to draw 2D shapes into a coordina
 ### Project Description
 
 Geozeichner allows users to draw and manipulate geometric shapes within a graphical coordinate system interface. The application is built using Java and Swing for the GUI components.
-
-[![Geozeichner](https://res.cloudinary.com/marcomontalbano/image/upload/v1649765888/video_to_markdown/images/youtube--HJqMfB_-E5g-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/HJqMfB_-E5g "Geozeichner")
 
 ### Installation
 
